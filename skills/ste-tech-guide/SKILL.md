@@ -1,6 +1,6 @@
 ---
 name: ste-tech-guide
-description: Write a clean, print-ready how-to guide for engineers in ASD-STE100 Simplified Technical English. The guide is a clean, wiki-style HTML page that you preview first and then export to PDF. Use this skill whenever the user asks for a guide, how-to, explainer, onboarding page, runbook, wiki or knowledge-base page, or "a doc for junior engineers / the team" about a feature, config option, setting, API, pipeline step or code change, in any project and any language stack, even if they do not say STE, HTML or PDF. Also use it when the user asks to make a technical document simpler, easier to read for non-native speakers, or "in STE / simplified English". Do not use it for README or reference docs that live as Markdown inside a codebase, unless the user asks for this style.
+description: Write a how-to guide, explainer or runbook for engineers about a feature, setting, config option or code change, in simple English (ASD-STE100), as a clean HTML page that you preview and then export to PDF. Use it whenever the user asks for a guide, how-to, manual, training doc, technical instructions, onboarding or wiki page, or a doc for junior engineers or the team, in any project, even if they do not say STE or PDF. Also use it to rewrite a technical doc in simpler English.
 license: MIT. See LICENSE at the repository root.
 ---
 
@@ -11,6 +11,9 @@ change** to a reader who is new to the code. The output is a single self-contain
 default, it uses the recommended clean, wiki-style look in `assets/template.html`. If the user asks
 for their own styling, use it instead. The user reviews the page in a preview, and then you export
 it to PDF.
+
+Do not use this skill for README files or reference docs that stay as Markdown inside a codebase,
+unless the user asks for this style.
 
 The value of this skill is three things together:
 

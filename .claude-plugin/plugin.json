@@ -1,10 +1,10 @@
 {
   "name": "knowledge-sharing",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Skills that help engineers share knowledge: clear, print-ready technical guides written in ASD-STE100 Simplified Technical English.",
   "author": {
     "name": "Rafael Escoto"
   },
   "license": "MIT",
-  "keywords": ["documentation", "technical-writing", "ste100", "simplified-technical-english", "how-to", "pdf", "onboarding"]
+  "keywords": ["documentation", "technical-writing", "ste100", "simplified-technical-english", "how-to", "manual", "training", "technical-instructions", "pdf", "onboarding"]
 }
