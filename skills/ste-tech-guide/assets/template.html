@@ -111,7 +111,11 @@
 
   /* Numbered procedure steps */
   ol.steps { counter-reset: step; list-style: none; padding-left: 0; }
-  ol.steps > li { counter-increment: step; position: relative; padding-left: 36px; margin: 12px 0; break-inside: avoid; }
+  ol.steps > li { counter-increment: step; position: relative; padding-left: 36px; margin: 12px 0; }
+  ol.steps > li > p:first-child { break-after: avoid; }  /* keep the step text with its code block */
+
+  /* Keep a heading, its intro and a diagram together on one page */
+  .keep { break-inside: avoid; }
   ol.steps > li::before {
     content: counter(step);
     position: absolute; left: 0; top: 1px;
@@ -152,9 +156,16 @@
     .page { max-width: none; padding: 0; }
     h2, h3 { break-after: avoid; }
     a { color: var(--text); text-decoration: none; }
-    /* One section per page: every h2 after the first starts a new page.
-       Delete this rule for a short guide where the sections fit together. */
-    main > h2 ~ h2 { break-before: page; margin-top: 0; }
+    /* Sections run on, so the PDF has no half-empty pages. Panels, tables, code blocks
+       and .keep blocks do not split. A long procedure step can split.
+       Compact diagram in print: shorter arrows, so a 5-step diagram fits on one page
+       with its heading. */
+    .flow-arrow { height: 16px; }
+    .flow-arrow svg { height: 16px; }
+    /* Optional: one section per page. Use it only for a guide with long sections.
+    main h2 { break-before: page; margin-top: 0; }
+    main > h2:first-of-type { break-before: auto; }
+    */
   }
 </style>
 </head>
@@ -203,6 +214,7 @@
   </div>
 
   <!-- ===== 3. Flow diagram ===== -->
+  <div class="keep">
   <h2 id="flow">3. How the data moves</h2>
   <p>The diagram shows the steps for each row. The text on the right tells you what occurs and why the step is in that position.</p>
 
@@ -247,6 +259,7 @@
     </div>
   </div>
   <p class="flow-caption">The column names are examples. <code>R001</code> is an example value.</p>
+  </div>
 
   <div class="panel ok">
     <div class="icon">✓</div>

@@ -74,9 +74,25 @@ These rules make the page easy to read and make the PDF correct. Keep them in ev
 
 - No scripts, no animations, no hover-only content. The page is made for print.
 - Long code lines wrap (`white-space: pre-wrap; overflow-wrap: anywhere`). Nothing scrolls sideways.
-- Panels, code blocks, tables, steps and the flow diagram do not split across pages
+- Panels, code blocks, tables and the flow diagram do not split across pages
   (`break-inside: avoid`).
+- A long procedure step can split across pages, but its code block stays whole. The first
+  paragraph of a step stays with what comes after it (`ol.steps > li > p:first-child { break-after: avoid; }`).
 - Headings stay with the text after them (`break-after: avoid`).
+- Put the heading, the intro sentence and the diagram of the "how it works" section in one
+  `<div class="keep">` (`break-inside: avoid`). Then the diagram never leaves its heading alone at
+  the bottom of a page.
+- In print, the diagram arrows are 16 px high (`.flow-arrow { height: 16px; }`), so a 5-step
+  diagram and its heading fit on one page.
 - `@page { size: A4; }` with margins, and `print-color-adjust: exact`, so that the colors print.
-- By default, each section starts on a new page (`main > h2 ~ h2 { break-before: page; }`).
+- The sections run on, one after the other. This is the default, because in a real guide a page break
+  before each section left half-empty pages and made the PDF much longer.
 - The page works at phone width: the flow diagram changes to one column.
+
+**Optional: one section per page.** Use this only for a guide with long sections, or when the user
+asks for it. Add these rules inside `@media print`:
+
+```css
+main h2 { break-before: page; margin-top: 0; }
+main > h2:first-of-type { break-before: auto; }
+```

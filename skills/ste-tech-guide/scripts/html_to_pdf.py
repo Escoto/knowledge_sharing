@@ -19,6 +19,8 @@ import tempfile
 import time
 from pathlib import Path
 
+MAX_PAGES = 5  # length budget for one guide, see SKILL.md
+
 
 def find_browser() -> str:
     env = os.environ.get("BROWSER_PATH")
@@ -109,9 +111,13 @@ def main() -> None:
         # The browser can keep log files open for a short time after it exits.
         shutil.rmtree(profile, ignore_errors=True)
 
+    pages = count_pages(out)
     print(f"PDF: {out}")
-    print(f"Pages: {count_pages(out)}")
+    print(f"Pages: {pages}")
     print(f"Size: {out.stat().st_size // 1024} KB")
+    if pages > MAX_PAGES:
+        print(f"Warning: {pages} pages is more than the budget of about {MAX_PAGES}. "
+              "Cut the text (see 'Length budget' in SKILL.md), or split the guide.")
 
 
 if __name__ == "__main__":
