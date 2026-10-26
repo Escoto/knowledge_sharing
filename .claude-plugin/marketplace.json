@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "knowledge-sharing",
+  "description": "Skills that help engineers share knowledge with clear, simple documentation.",
+  "owner": {
+    "name": "Rafael Escoto"
+  },
+  "plugins": [
+    {
+      "name": "knowledge-sharing",
+      "description": "Write clean, print-ready how-to guides for engineers in ASD-STE100 Simplified Technical English.",
+      "source": "./",
+      "category": "documentation"
+    }
+  ]
+}

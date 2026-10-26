@@ -1,0 +1,319 @@
+<!doctype html>
+<!--
+  STE tech guide template: the recommended style (a clean, wiki-style page).
+  Copy this file, replace the sample content, and delete the components you do not use.
+  To use a different look, change the CSS variables in :root first.
+  See references/page-style.md for the rules that every style must keep.
+  Keep the header clean: title + "Created By <name>" only. No logo bar, breadcrumbs,
+  dates, labels/lozenges, "about this page" panels, or links that go nowhere.
+  No scripts and no animations: the page is made to print to PDF.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Use the example setting</title>
+<style>
+  :root {
+    --text: #172B4D;
+    --text-subtle: #5E6C84;
+    --link: #0052CC;
+    --border: #DFE1E6;
+    --bg: #FFFFFF;
+    --bg-neutral: #F4F5F7;
+    --code-bg: #F4F5F7;
+    --info-bg: #DEEBFF;  --info-icon: #0052CC;
+    --note-bg: #EAE6FF;  --note-icon: #5243AA;
+    --warn-bg: #FFFAE6;  --warn-icon: #FF8B00;
+    --error-bg: #FFEBE6; --error-icon: #DE350B;
+    --ok-bg: #E3FCEF;    --ok-icon: #00875A;
+    --add-bg: #E3FCEF;   --add-text: #006644;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", Ubuntu, "Helvetica Neue", sans-serif;
+    font-size: 14px;
+    line-height: 1.714;
+  }
+
+  .page { max-width: 760px; margin: 0 auto; padding: 24px 16px 64px; }
+
+  h1.title { font-size: 29px; font-weight: 500; line-height: 1.1; letter-spacing: -0.01em; margin: 0 0 12px; }
+  h1.title code { font-size: 24px; padding: 1px 6px; }
+
+  .byline { display: flex; align-items: center; gap: 8px; color: var(--text-subtle); font-size: 13px; margin-bottom: 28px; }
+  .avatar { width: 24px; height: 24px; border-radius: 50%; background: #00875A; color: #fff; font-size: 11px; font-weight: 600; display: grid; place-items: center; }
+  .lozenge { display: inline-block; padding: 0 4px; border-radius: 3px; font-size: 11px; font-weight: 700; text-transform: uppercase; line-height: 16px; vertical-align: 1px; }
+  .lozenge.green { background: var(--ok-bg); color: #006644; }
+  .lozenge.grey { background: #DFE1E6; color: #42526E; }
+  .lozenge.red { background: var(--error-bg); color: #BF2600; }
+
+  h2 { font-size: 20px; font-weight: 500; letter-spacing: -0.008em; margin: 36px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 16px; font-weight: 600; margin: 24px 0 4px; }
+  p { margin: 8px 0; }
+  ul, ol { margin: 8px 0; padding-left: 24px; }
+  li { margin: 4px 0; }
+  a { color: var(--link); }
+  code {
+    font-family: SFMono-Medium, "SF Mono", "Segoe UI Mono", "Roboto Mono", Consolas, Menlo, monospace;
+    font-size: 12px;
+    background: var(--code-bg);
+    border-radius: 3px;
+    padding: 1px 4px;
+    color: var(--text);
+  }
+
+  /* Table of contents */
+  .toc { border-left: 2px solid var(--border); padding: 4px 0 4px 16px; margin: 0 0 8px; }
+  .toc .toc-title { font-weight: 600; margin-bottom: 4px; }
+  .toc ol { margin: 0; padding-left: 18px; }
+  .toc li { margin: 0; }
+  .toc a { text-decoration: none; }
+
+  /* Panels: info (i), note (?), warn (!), error (×), ok (✓) */
+  .panel { display: flex; gap: 12px; border-radius: 3px; padding: 8px 16px 8px 12px; margin: 16px 0; break-inside: avoid; }
+  .panel .icon { flex: 0 0 20px; height: 20px; margin-top: 2px; border-radius: 50%; color: #fff; font-size: 12px; font-weight: 700; display: grid; place-items: center; }
+  .panel .body p:first-child { margin-top: 0; }
+  .panel .body p:last-child { margin-bottom: 0; }
+  .panel.info { background: var(--info-bg); } .panel.info .icon { background: var(--info-icon); }
+  .panel.note { background: var(--note-bg); } .panel.note .icon { background: var(--note-icon); }
+  .panel.warn { background: var(--warn-bg); } .panel.warn .icon { background: var(--warn-icon); }
+  .panel.error { background: var(--error-bg); } .panel.error .icon { background: var(--error-icon); }
+  .panel.ok { background: var(--ok-bg); } .panel.ok .icon { background: var(--ok-icon); }
+
+  /* Code block with a title bar. One <span class="ln"> per line; .add = new line, .dim = context */
+  .code-block { border: 1px solid var(--border); border-radius: 3px; margin: 12px 0 16px; overflow: hidden; break-inside: avoid; }
+  .code-block .code-title { background: var(--bg-neutral); border-bottom: 1px solid var(--border); padding: 6px 12px; font-size: 12px; font-weight: 600; color: var(--text-subtle); word-break: break-all; }
+  .code-block pre {
+    margin: 0; padding: 10px 0;
+    background: #FAFBFC;
+    font-family: SFMono-Medium, "SF Mono", "Segoe UI Mono", "Roboto Mono", Consolas, Menlo, monospace;
+    font-size: 12px; line-height: 1.65;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  .code-block pre .ln { display: block; padding: 0 12px; }
+  .code-block pre .ln.add { background: var(--add-bg); color: var(--add-text); font-weight: 600; }
+  .code-block pre .ln.dim { color: #97A0AF; }
+  .k { color: #0747A6; }
+  .s { color: #006644; }
+  .c { color: #6B778C; font-style: italic; }
+
+  /* Tables */
+  table { border-collapse: collapse; width: 100%; margin: 12px 0 16px; font-size: 14px; break-inside: avoid; }
+  th, td { border: 1px solid #C1C7D0; padding: 7px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--bg-neutral); font-weight: 600; }
+
+  /* Numbered procedure steps */
+  ol.steps { counter-reset: step; list-style: none; padding-left: 0; }
+  ol.steps > li { counter-increment: step; position: relative; padding-left: 36px; margin: 12px 0; break-inside: avoid; }
+  ol.steps > li::before {
+    content: counter(step);
+    position: absolute; left: 0; top: 1px;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--link); color: #fff;
+    font-size: 12px; font-weight: 700;
+    display: grid; place-items: center;
+  }
+
+  /* Vertical flow diagram: step box on the left, one "what + why here" sentence on the right */
+  .flow { margin: 16px 0 8px; break-inside: avoid; }
+  .flow-row { display: grid; grid-template-columns: 260px 1fr; column-gap: 24px; align-items: center; }
+  .flow-node { border: 1px solid #C1C7D0; border-left: 4px solid var(--link); border-radius: 3px; background: #fff; padding: 8px 12px; }
+  .flow-node .n { font-size: 11px; font-weight: 700; color: var(--text-subtle); text-transform: uppercase; letter-spacing: 0.04em; }
+  .flow-node .t { font-weight: 600; font-size: 14px; line-height: 1.4; }
+  .flow-node .chips { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 4px; }
+  .flow-node.key { border-left-color: var(--note-icon); }   /* the step the guide is about */
+  .flow-node.final { border-left-color: var(--ok-icon); }   /* the last step / result */
+  .chip { font-family: SFMono-Medium, "SF Mono", "Segoe UI Mono", Consolas, monospace; font-size: 11px; line-height: 16px; padding: 0 5px; border-radius: 3px; background: var(--bg-neutral); color: var(--text); border: 1px solid var(--border); }
+  .chip.gone { color: #97A0AF; text-decoration: line-through; background: #fff; }  /* removed at this step */
+  .chip.id { background: var(--note-bg); border-color: #C0B6F2; color: #403294; font-weight: 600; }  /* the item to follow */
+  .chip.url { background: var(--info-bg); border-color: #B3D4FF; color: #0747A6; }
+  .flow-note { font-size: 13.5px; line-height: 1.5; padding-left: 12px; border-left: 2px solid var(--border); }
+  .flow-arrow { display: grid; grid-template-columns: 260px 1fr; column-gap: 24px; height: 28px; }
+  .flow-arrow svg { justify-self: center; display: block; }
+  .flow-caption { color: var(--text-subtle); font-size: 12px; margin-top: 12px; }
+
+  .footer { margin-top: 48px; padding-top: 12px; border-top: 1px solid var(--border); color: var(--text-subtle); font-size: 12px; }
+
+  @media (max-width: 640px) {
+    .flow-row, .flow-arrow { grid-template-columns: 1fr; }
+    .flow-note { margin: 8px 0 0; }
+    .flow-arrow > div:last-child { display: none; }
+  }
+
+  @page { size: A4; margin: 16mm 14mm 18mm; }
+  @media print {
+    .page { max-width: none; padding: 0; }
+    h2, h3 { break-after: avoid; }
+    a { color: var(--text); text-decoration: none; }
+    /* One section per page: every h2 after the first starts a new page.
+       Delete this rule for a short guide where the sections fit together. */
+    main > h2 ~ h2 { break-before: page; margin-top: 0; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <!-- ===== Header: title + author only ===== -->
+  <h1 class="title">How to use <code>example_setting</code></h1>
+  <div class="byline">
+    <div class="avatar">AB</div>
+    <span>Created By Ada Byron</span>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">On this page</div>
+    <ol>
+      <li><a href="#purpose">Purpose</a></li>
+      <li><a href="#problem">The problem</a></li>
+      <li><a href="#flow">How the data moves</a></li>
+      <li><a href="#rules">Rules</a></li>
+      <li><a href="#procedure">Procedure: add <code>example_setting</code> to a config</a></li>
+      <li><a href="#check">Check the result</a></li>
+    </ol>
+  </div>
+
+  <!-- ===== 1. Purpose ===== -->
+  <h2 id="purpose">1. Purpose</h2>
+  <p>This page tells you how to use the <code>example_setting</code> setting.</p>
+  <p>Use this setting when a value must go into the URL, but must not go into the request body.</p>
+  <table>
+    <tr><th style="width:34%">Term</th><th>Meaning on this page</th></tr>
+    <tr><td>Row</td><td>One record from the source table.</td></tr>
+    <tr><td>Field</td><td>One column value in a row.</td></tr>
+  </table>
+
+  <!-- ===== 2. The problem ===== -->
+  <h2 id="problem">2. The problem</h2>
+  <p>The service needs the record ID in the URL. The request body must not contain the ID.</p>
+  <div class="code-block">
+    <div class="code-title">endpoint</div>
+<pre><span class="ln">/api/v1/records/<b>{record_id}</b>/actions/approve</span></pre>
+  </div>
+  <div class="panel warn">
+    <div class="icon">!</div>
+    <div class="body"><p><b>Do not remove <code>record_id</code> before the job makes the URL.</b> If you do this, the job stops with an error.</p></div>
+  </div>
+
+  <!-- ===== 3. Flow diagram ===== -->
+  <h2 id="flow">3. How the data moves</h2>
+  <p>The diagram shows the steps for each row. The text on the right tells you what occurs and why the step is in that position.</p>
+
+  <div class="flow" role="img" aria-label="Flow: read table, map columns, make URL, remove field from body">
+    <div class="flow-row">
+      <div class="flow-node">
+        <div class="n">Step 1</div>
+        <div class="t">Read table</div>
+        <div class="chips"><span class="chip">sales.orders</span></div>
+      </div>
+      <div class="flow-note">The job reads the rows first, because all the next steps use these rows.</div>
+    </div>
+    <div class="flow-arrow"><svg width="16" height="28" viewBox="0 0 16 28" aria-hidden="true"><line x1="8" y1="0" x2="8" y2="20" stroke="#5E6C84" stroke-width="2"/><path d="M2 18 L8 27 L14 18 Z" fill="#5E6C84"/></svg><div></div></div>
+
+    <div class="flow-row">
+      <div class="flow-node">
+        <div class="n">Step 2</div>
+        <div class="t">Map columns</div>
+        <div class="chips"><span class="chip id">record_id</span><span class="chip">status</span><span class="chip gone">internal_note</span></div>
+      </div>
+      <div class="flow-note">The mapping removes the columns that the API does not use, but it keeps <code>record_id</code> for step 3.</div>
+    </div>
+    <div class="flow-arrow"><svg width="16" height="28" viewBox="0 0 16 28" aria-hidden="true"><line x1="8" y1="0" x2="8" y2="20" stroke="#5E6C84" stroke-width="2"/><path d="M2 18 L8 27 L14 18 Z" fill="#5E6C84"/></svg><div></div></div>
+
+    <div class="flow-row">
+      <div class="flow-node key">
+        <div class="n">Step 3</div>
+        <div class="t">Make the URL</div>
+        <div class="chips"><span class="chip url">…/records/<b>R001</b>/actions/…</span></div>
+      </div>
+      <div class="flow-note">The job puts the <code>record_id</code> value into the URL, so this step must occur before the job removes the field.</div>
+    </div>
+    <div class="flow-arrow"><svg width="16" height="28" viewBox="0 0 16 28" aria-hidden="true"><line x1="8" y1="0" x2="8" y2="20" stroke="#5E6C84" stroke-width="2"/><path d="M2 18 L8 27 L14 18 Z" fill="#5E6C84"/></svg><div></div></div>
+
+    <div class="flow-row">
+      <div class="flow-node final">
+        <div class="n">Step 4</div>
+        <div class="t">example_setting</div>
+        <div class="chips"><span class="chip gone">record_id</span><span class="chip">status</span></div>
+      </div>
+      <div class="flow-note">The job removes <code>record_id</code> from the body last, because the URL already contains the value.</div>
+    </div>
+  </div>
+  <p class="flow-caption">The column names are examples. <code>R001</code> is an example value.</p>
+
+  <div class="panel ok">
+    <div class="icon">✓</div>
+    <div class="body"><p><b>Summary.</b> Remove a field in the mapping when the API never needs it. Use <code>example_setting</code> when the URL needs the field, but the body does not need it.</p></div>
+  </div>
+
+  <!-- ===== 4. Rules ===== -->
+  <h2 id="rules">4. Rules</h2>
+  <ul>
+    <li>Put <code>example_setting</code> in the <code>push</code> section.</li>
+    <li>The value is a list of field names.</li>
+    <li>Each field in the list must be in the row. If a field is not there, the job stops.</li>
+  </ul>
+  <div class="panel note">
+    <div class="icon">?</div>
+    <div class="body"><p><b>Library version.</b> Use version 2.0 or a later version. An older version does not accept this setting.</p></div>
+  </div>
+
+  <!-- ===== 5. Procedure ===== -->
+  <h2 id="procedure">5. Procedure: add <code>example_setting</code> to a config</h2>
+  <h3>Before you start</h3>
+  <ul>
+    <li>Make a new branch from <code>main</code>.</li>
+  </ul>
+  <h3>Steps</h3>
+  <ol class="steps">
+    <li><p>Open the config file.</p></li>
+    <li>
+      <p>Add <code>example_setting</code> below <code>method</code>. The green lines are the new lines.</p>
+      <div class="code-block">
+        <div class="code-title">config.yml</div>
+<pre><span class="ln dim">  <span class="k">push</span>:</span><span class="ln">    <span class="k">endpoint</span>: <span class="s">"/api/v1/records/{record_id}/actions/approve"</span></span><span class="ln">    <span class="k">method</span>: <span class="s">"POST"</span></span><span class="ln add">    example_setting:</span><span class="ln add">      - "record_id"</span><span class="ln dim">    <span class="c"># ... the other settings do not change ...</span></span></pre>
+      </div>
+    </li>
+    <li><p>Save the file. Commit the change. Open a pull request.</p></li>
+  </ol>
+
+  <!-- ===== 6. Check the result ===== -->
+  <h2 id="check">6. Check the result</h2>
+  <p>Run the job in the dev environment. Then compare the request before and after the change.</p>
+  <table>
+    <tr><th style="width:22%"></th><th>Before the change</th><th>After the change</th></tr>
+    <tr><td><b>URL</b></td><td><code>…/records/R001/…</code></td><td><code>…/records/R001/…</code><br><span class="lozenge grey">No change</span></td></tr>
+    <tr><td><b>Request body</b></td><td><code>{"record_id": "R001", "status": "ok"}</code></td><td><code>{"status": "ok"}</code><br><span class="lozenge green">record_id removed</span></td></tr>
+  </table>
+
+  <!-- ===== Panel gallery: copy a panel when you need it =====
+       Wording rules and good/bad examples: references/callouts-and-caveats.md
+
+  <div class="panel error">
+    <div class="icon">×</div>
+    <div class="body"><p><b>Do not run this script on the production catalog.</b> The script deletes all the rows in the target table. You cannot get the rows back.</p></div>
+  </div>
+
+  <div class="panel info">
+    <div class="icon">i</div>
+    <div class="body"><p><b>Where the job keeps a record.</b> The job writes each request to the <code>api_state</code> table. You can use this table to see what the job sent.</p></div>
+  </div>
+
+  Unverified fact, marked until the user confirms it:
+  <p>Use version 2.0 or a later version. <span class="lozenge red">To be confirmed</span></p>
+  -->
+
+  <div class="footer">
+    References: <code>docs/settings.md</code>.
+  </div>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,14 @@
+# Skill-creator test runs and benchmark output
+*-workspace/
+
+# Generated files from trying the skills
+*.pdf
+*.skill
+
+# Python
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db
