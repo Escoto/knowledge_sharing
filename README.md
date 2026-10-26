@@ -16,7 +16,7 @@ The skills write documentation that is correct, simple to read, and ready to pri
 In Claude Code, add this repository as a marketplace and install the plugin:
 
 ```text
-/plugin marketplace add <github-owner>/knowledge_sharing
+/plugin marketplace add Escoto/knowledge_sharing
 /plugin install knowledge-sharing@knowledge-sharing
 ```
 
@@ -45,21 +45,6 @@ Claude reads the code and docs, writes the page, opens a preview, and makes the 
 - Python 3.9 or later for the helper scripts. They use only the standard library.
 - Google Chrome, Microsoft Edge, or Chromium for the PDF export. Set `BROWSER_PATH` if the script
   cannot find the browser.
-
-## Repository layout
-
-```text
-.claude-plugin/
-  plugin.json          # plugin manifest
-  marketplace.json     # lets people add this repo as a marketplace
-skills/
-  <skill-name>/
-    SKILL.md           # instructions and trigger description
-    assets/            # templates used in the output
-    references/        # docs that the skill reads when it needs them
-    scripts/           # helper scripts
-    evals/             # test prompts for the skill (optional)
-```
 
 ## Contributing
 
